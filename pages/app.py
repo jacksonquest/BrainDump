@@ -6,6 +6,8 @@ import time
 from utils.helper_functions import score_mood, save_journal_entry, generate_ai_report, score_reflection_ai, \
                                     score_stress_ai, score_anxiety_ai, fetch_journal_entries, generate_wordcloud
 
+st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
+
 if "ai_output" not in st.session_state:
     st.session_state["ai_output"] = ""  # Default value
 
@@ -16,8 +18,6 @@ def stream_data():
         time.sleep(0.02)
 
 # Structure
-st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
-
 st.markdown('<div style="display: flex; justify-content: center;"><h4>BrainDump</h4></div>',unsafe_allow_html=True)
 
 with st.expander(f"Welcome {st.session_state.user_info['name']}"):
