@@ -6,12 +6,11 @@ from datetime import datetime
 from utils.helper_functions import add_user, authenticate_user, get_user_info
 
 
-# Load credentials securely
-FIRESTORE_KEY = st.secrets["FIRESTORE_KEY"]
+st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
 
 # Firebase Setup
 if not firebase_admin._apps:
-    cred = credentials.Certificate(eval(FIRESTORE_KEY))
+    cred = credentials.Certificate(st.secrets["firestore"].to_dict())
     firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -19,16 +18,14 @@ db = firestore.client()
 # Store credentials securely in session state
 if 'db' not in st.session_state:
     st.session_state['db'] = db
-if 'together_api_key' not in st.session_state:
-    st.session_state['together_api_key'] = TOGETHER_API_KEY
 
 # Streamlit UI
 
-st.set_page_config(layout="centered", initial_sidebar_state="collapsed")
-
 def main():
     st.markdown('<div style="display: flex; justify-content: center;"><h1>BrainDump</h1></div>',unsafe_allow_html=True)
-
+    _, logo_container, _ = st.columns([1,1.2,1])
+    logo_container.image('data/logo.png')
+    
     tab1, tab2 = st.tabs(["Sign In", "Sign Up"])
 
     with tab2:
